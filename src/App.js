@@ -1,65 +1,53 @@
 import React from 'react';
 import './App.css';
-// import main from './Main.js';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        mainMessage: 'Hola Mundo',
-        extraKey: "extra value",
+        odometer : 0
     }
-    this.frenchClicked = this.frenchClicked.bind(this);
+
   }
 
-  frenchClicked() {
+  add_miles(miles) {
     this.setState({
-      mainMessage: "Bonjour",
-    });
+      odometer : (this.state.odometer + miles) % 10000
+    })
   }
+
 
   render() {
       return (
         <div className="App">
-        <Header />
-        <Main message={this.state.mainMessage} title="lovin it" />
-        <button onClick={this.frenchClicked}>French</button>
-        <Footer description="this is the footers description"/>
-        <Extra text={this.state.mainMessage} />
+        <Header title="ODOMETER"/>
+        <h2>{this.state.odometer.toString().padStart(4, "0")}</h2>
+        <h3>Miles</h3>
+        <button onClick={() => this.add_miles(1)}>+1</button>
+        <button onClick={() => this.add_miles(10)}>+10</button>
+        <button onClick={() => this.add_miles(100)}>+100</button>
+        <button onClick={() => this.add_miles(1000)}>+1,000</button>
+        <Footer />
         </div>
       )
   }
-
 }
 
-function Header(){
-  return(
-    <nav>
-        <h3>Header Coming Soon</h3>
-    </nav>  
+function Header(props) {
+  return (
+      <nav>
+          <h1>{props.title}</h1>
+      </nav>
   )
 }
 
-function Main(props){
-  return(
-    <>
-      <h1>React Is Saucy</h1>
-      <h2>{props.title}</h2>
-      <p>{props.message}</p>
-    </>
-  )
-}
-
-function Extra(props){
-  return (props.text)
-}
-
-function Footer(props){
-  return(
+function Footer(props) {
+  return (
       <footer>
-        <h3>Footer Coming Soon</h3>
-        <p>{props.description}</p>
+        <div id="footer-div">
+          <h4>{props.trademark}TM LEE THOMAS</h4>
+        </div>
       </footer>
   )
 }
